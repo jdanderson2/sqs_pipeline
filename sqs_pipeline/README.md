@@ -1,4 +1,4 @@
-# Gtube
+# sqs_pipeline
 This is a simple application using GenStage in data processing.
 **TODO:**
 
