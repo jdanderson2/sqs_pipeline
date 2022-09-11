@@ -3,6 +3,6 @@ defmodule GtubeTest do
   doctest Gtube
 
   test "greets the world" do
-    assert Gtube.hello() == :world
+    assert 1 + 1 == 2
   end
 end
