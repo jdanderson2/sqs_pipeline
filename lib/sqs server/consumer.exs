@@ -14,7 +14,9 @@ defmodule Gtube.Consumer do
 
 
   def handle_events(events, _from, state) do
-    :timer.sleep(1000)
+    file
+    |> process_file
+    |>write_output(String.split(key, "."))
 
     for event <- events do
       IO.puts ({self(), event, state})
@@ -23,7 +25,25 @@ defmodule Gtube.Consumer do
 
     end
 
-    # As a consumer we never emit events
     {:noreply, [], state}
+  end
+  
+  # Private functions
+  defp process_file(file) do
+    file
+    |> String.split("\n")
+    |> Enum.filter(fn(line) -> line != "" end)
+    |> Enum.count
+   end
+   
+   defp write_output(event_count, [filepath, _]) do
+    filename = filepath
+    |> String.split("/")
+    |> List.last
+    
+    # Write the count to a file in append mode
+    File.open("output/#{filename}.txt", [:append], fn(file) ->
+      IO.write(file, "#{event_count}\n")
+    end)
   end
 end
